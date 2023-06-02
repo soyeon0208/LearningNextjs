@@ -2,20 +2,10 @@ import { useState, useEffect } from 'react';
 import Seo from '@/components/Seo';
 import Navbar from '@/components/NavBar';
 
-const API_KEY = '57faefb9333572e59a93898f018cb7cc';
-
-export default function Home() {
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    (async () => {
-      const { results } = await (await fetch(`/api/movies`)).json();
-      setMovies(results);
-    })();
-  }, []);
+export default function Home({ results }) {
   return (
     <div className="container">
       <Seo title="Home" />
-      {!movies && <h4>Loading...</h4>}
       {movies?.map((movie) => (
         <div className="movie" key={movie.id}>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
@@ -45,4 +35,13 @@ export default function Home() {
       `}</style>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const { results } = await (await fetch(`/api/movies`)).json();
+  return {
+    props: {
+      results,
+    },
+  };
 }
