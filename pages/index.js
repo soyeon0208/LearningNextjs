@@ -8,25 +8,21 @@ export default function Home() {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
     (async () => {
-      const { results } = await (
-        await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
-        )
-      ).json();
+      const { results } = await (await fetch(`/api/movies`)).json();
       setMovies(results);
     })();
   }, []);
   return (
-    <div>
-      <Navbar />
+    <div className="container">
       <Seo title="Home" />
+      {!movies && <h4>Loading...</h4>}
       {movies?.map((movie) => (
         <div className="movie" key={movie.id}>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
           <h4>{movie.original_title}</h4>
         </div>
       ))}
-        <style jsx>{`
+      <style jsx>{`
         .container {
           display: grid;
           grid-template-columns: 1fr 1fr;
