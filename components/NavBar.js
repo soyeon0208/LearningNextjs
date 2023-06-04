@@ -33,6 +33,8 @@ export default function NavBar() {
         nav a {
           font-weight: 600;
           font-size: 18px;
+          text-decoration: none !important;
+          color: black;
         }
         .active {
           color: tomato;
@@ -40,6 +42,7 @@ export default function NavBar() {
         nav div {
           display: flex;
           gap: 10px;
+          text-decoration: none;
         }
       `}</style>
     </nav>
